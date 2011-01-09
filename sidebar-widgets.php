@@ -1,60 +1,43 @@
 <?php
 /**
- * The aside widget areas.
+ * The Sidebar containing the primary and secondary widget areas.
  *
  * @package WordPress
  * @subpackage Flexopotamus
  * @since Flexopotamus 1.0
  */
 ?>
+<aside id="aside">
+	<div id="aside-widget-area-1">
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo">
 
 <?php
-	/* The aside widget area is triggered if any of the areas
-	 * have widgets. So let's check that first.
-	 *
-	 * If none of the sidebars have widgets, then let's bail early.
+	/* When we call the dynamic_sidebar() function, it'll spit out
+	 * the widgets for that widget area. If it instead returns false,
+	 * then the sidebar simply doesn't exist, so we'll hard-code in
+	 * some default sidebar stuff just in case.
 	 */
-	if (   ! is_active_sidebar( 'first-aside-widget-area'  )
-		&& ! is_active_sidebar( 'second-aside-widget-area' )
-		&& ! is_active_sidebar( 'third-aside-widget-area'  )
-		&& ! is_active_sidebar( 'fourth-aside-widget-area' )
-	)
-		return;
-	// If we get this far, we have widgets. Let do this.
-?>
+	if ( ! dynamic_sidebar( 'primary-widget-area' ) ) : ?>
+	
+			<li id="search" class="widget-container widget_search">
+				<?php get_search_form(); ?>
+			</li>
 
-			<div id="aside-widget-area-2" role="complementary">
+			<li id="meta" class="widget-container">
+				<h3 class="widget-title"><?php _e( 'Meta', 'flexopotamus' ); ?></h3>
+				<ul>
+					<?php wp_register(); ?>
+					<li><?php wp_loginout(); ?></li>
+					<?php wp_meta(); ?>
+				</ul>
+			</li>
 
-<?php if ( is_active_sidebar( 'first-aside-widget-area' ) ) : ?>
-				<div id="first" class="widget-area">
-					<ul class="xoxo">
-						<?php dynamic_sidebar( 'first-aside-widget-area' ); ?>
-					</ul>
-				</div><!-- #first .widget-area -->
-<?php endif; ?>
+		<?php endif; // end primary widget area ?>
+			</ul>
+		</div><!-- #primary .widget-area -->
+	</div><!-- #aside-widget-area-1 -->		
 
-<?php if ( is_active_sidebar( 'second-aside-widget-area' ) ) : ?>
-				<div id="second" class="widget-area">
-					<ul class="xoxo">
-						<?php dynamic_sidebar( 'second-aside-widget-area' ); ?>
-					</ul>
-				</div><!-- #second .widget-area -->
-<?php endif; ?>
+<?php get_sidebar( 'widgets' ); ?>		
 
-<?php if ( is_active_sidebar( 'third-aside-widget-area' ) ) : ?>
-				<div id="third" class="widget-area">
-					<ul class="xoxo">
-						<?php dynamic_sidebar( 'third-aside-widget-area' ); ?>
-					</ul>
-				</div><!-- #third .widget-area -->
-<?php endif; ?>
-
-<?php if ( is_active_sidebar( 'fourth-aside-widget-area' ) ) : ?>
-				<div id="fourth" class="widget-area">
-					<ul class="xoxo">
-						<?php dynamic_sidebar( 'fourth-aside-widget-area' ); ?>
-					</ul>
-				</div><!-- #fourth .widget-area -->
-<?php endif; ?>
-
-			</div><!-- #aside-widget-area -->
+</aside>
