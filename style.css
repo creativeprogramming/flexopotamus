@@ -996,6 +996,8 @@ h3#reply-title {
 }
 #site-info {
 	font-weight: bold;
+	float: left;
+	width: 50%;	
 }
 #site-info a {
 	color: #000;
@@ -1004,6 +1006,9 @@ h3#reply-title {
 #site-generator {
 	position: relative;
 	font-style: italic;
+	float: right;
+	text-align: right;
+	width: 45%;
 }
 #site-generator a {
 	color: #666;
