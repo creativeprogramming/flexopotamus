@@ -325,68 +325,13 @@ div.menu li {
 -------------------------------------------------------------- */
 
 #wrap, #container {
-	float: right;
-	width: 67%;	
+
 }
 
 #content {
-	padding-left: 30px;
-	margin-left: 30px;
-	border-left: 1px solid #ddd;
-}
-#content,
-#content input,
-#content textarea {
 
 }
-#content p,
-#content ul,
-#content ol,
-#content dd,
-#content pre,
-#content hr {
 
-}
-#content ul ul,
-#content ol ol,
-#content ul ol,
-#content ol ul {
-
-}
-#content pre,
-#content kbd,
-#content tt,
-#content var {
-
-}
-#content code {
-
-}
-#content dt,
-#content th {
-
-}
-#content h1,
-#content h2,
-#content h3,
-#content h4,
-#content h5,
-#content h6 {
-
-}
-#content table {
-
-}
-#content tr th,
-#content thead th {
-
-}
-#content tr td {
-
-}
-#content tr.odd td {
-
-}
 .hentry {
 	margin-bottom: 3em;
 	padding-bottom: 3em;
@@ -543,17 +488,14 @@ div.menu li {
 -------------------------------------------------------------- */
 
 aside {
-	float: left;
-	width: 33%;
+	width: 100%;
 }
 
 #aside #aside-widget-area-1 {
-	float: left;
 	width: 100%
 }
 
 #aside #aside-widget-area-2 {
-	float: left;
 	width: 100%
 }
 
@@ -588,12 +530,14 @@ aside {
 	display: inline;
 	float: left;
 	margin-top: 4px;
+	margin-right: 2.5em;
 }
 #content .alignright,
 #content img.alignright {
 	display: inline;
 	float: right;
 	margin-top: 4px;
+	margin-left: 2.5em;	
 }
 #content .aligncenter,
 #content img.aligncenter {
@@ -1049,9 +993,7 @@ code {
 
 /* large screen */
 @media screen and (min-width: 1180px) {
-	#wrapper {
-	max-width: 1250px;
-   	} 
+
 	
 	#aside #aside-widget-area-1 {
 		float: left;
@@ -1073,100 +1015,68 @@ code {
 	}  
 }
 
-/* normal width */
-@media screen and (max-width: 960px) {
-	body {  
-	    font-size: 95%;
+
+@media screen and (min-width: 960px) {
+	
+	p, li {
+		line-height: 1.75em;
+		font-size: 14px; 
 	}
 	
 	#wrap, #container {
-	    line-height: 1.4em;
+		float: right;
+		width: 67%;	
+	}
+
+	#content {
+		padding-left: 30px;
+		margin-left: 30px;
+		border-left: 1px solid #ddd;
+	}
+		
+	aside {
+		float: left;
+		width: 33%;
 	}
 	
-	body #aside #aside-widget-area-2 {
-		border-left: none;
-	}	
-	
-	body #aside #aside-widget-area-2 .widget-area {
-		padding-left: 0;	
-	}  	
-
 }
 
-/* medium width */
-@media screen and (max-width: 760px) {
+@media all and (max-width: 960px) {
+	
 	body {  
-	    font-size: 95%;
+	    font-size: 80%; 
+		line-height: 2.1em;
+		margin: 0 5%;
 	}
 	
-	#wrap, #container {
-	    width: 100%;
-	    float: left;
-	    line-height: 1.4em;
-	}
-	
-	#content {
-		border-left: none;
-		margin-left: 0;
-		padding-left: 0;
-	}
-			
-	#aside #aside-widget-area-1 {
-		float: left;
-		width: 100%
-	}
+}
 
-	#aside #aside-widget-area-2 {
-		float: left;
-		width: 100%;
-		border-left: none;		
+/* mobile width */
+@media all and (max-width: 640px) {
+
+		
+	#content {
+		width: 100%;	
+		border-right: none;
+		margin-left: 0;
 	}	
-	
-	#aside #aside-widget-area-2 .widget-area {
-		padding-left: 0;	
-	}  
 }
 
 /* Smart Phones */
 @media screen and (max-width: 420px) {
 body {  
-    font-size: 85%;
-    border-top: none;
     background: none;
 }
-	#wrap, #container {
-	    width: 100%;
-	    float: left;
-	    line-height: 1.4em;
-	}
 	
-	#content {
-		border-left: none;
-		margin-left: 0;
-		padding-left: 0;
-	}	
 	 
 	aside {
 		clear: left;
-		width: 100%;
-	}
-	
-	#aside #aside-widget-area-1 {
-		float: left;
-		width: 100%
-	}
-
-	#aside #aside-widget-area-2 {
-		float: left;
-		width: 100%
-	}      
+	} 
 }
 
 img,video,object {
     max-width: 100%;
 }
-
-
 
 /* =Print Style
 -------------------------------------------------------------- */
