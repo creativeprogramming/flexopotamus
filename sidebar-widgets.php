@@ -10,6 +10,7 @@
 
 
 <div id="aside-widget-area-2">
+<div class="aside-widget-area">	
 	<div id="secondary" class="widget-area" role="complementary">
 		<ul class="xoxo">
 	<?php
@@ -37,5 +38,5 @@
 			<?php endif; // end aside widget area ?>
 				</ul>
 			</div><!-- #secondary .widget-area -->
-
+</div><!-- .aside-widget-area -->
 </div><!-- #aside-widget-area -->

@@ -27,10 +27,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	background: transparent;
 }
 body {
-	line-height: 1;
+	font: 62.5% Georgia, "Bitstream Charter", serif;
+	line-height: 1.9em;
+	color: #666;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
+	line-height: 1.2em;
 	clear: both;
 }
 ol, ul {
@@ -91,7 +94,7 @@ h3#reply-title,
 .wp-caption-text,
 input[type=submit]
 {
-	font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, "Nimbus Sans L", sans-serif;
 }
 pre {
 	font-family: "Courier 10 Pitch", Courier, monospace;
@@ -278,11 +281,13 @@ div.menu {
 }
 #access .menu-header ul,
 div.menu ul {
-
+	overflow: hidden;
 }
 #access .menu-header li,
 div.menu li {
-
+	float: left;
+	list-style: none;
+	margin-right: 5px;
 }
 #access a {
 
@@ -358,8 +363,9 @@ div.menu li {
 
 }
 #content .entry-title {
-	margin-bottom: .5em;
-	line-height: 1em;
+	margin-bottom: .65em;
+	font-size: 2.6em;
+	font-weight: 600;
 }
 .entry-title a:link,
 .entry-title a:visited {
@@ -644,7 +650,6 @@ aside {
 }
 h3#comments-title,
 h3#reply-title {
-	color: #000;
 	font-weight: bold;
 	font-size: 20px;
 	margin-bottom: 0;
@@ -997,7 +1002,7 @@ code {
 	
 	#aside #aside-widget-area-1 {
 		float: left;
-		width: 49%
+		width: 50%
 	}
 	
 	#aside #aside-widget-area-1 .widget-area {
@@ -1007,9 +1012,12 @@ code {
 	#aside #aside-widget-area-2 {
 		float: left;
 		width: 50%;
-		border-left: 1px solid #ddd;
 	}	
 	
+	#aside #aside-widget-area-2 .aside-widget-area {
+		border-left: 1px solid #ddd;
+	}
+		
 	#aside #aside-widget-area-2 .widget-area {
 		padding-left: 30px;	
 	}  
@@ -1019,8 +1027,8 @@ code {
 @media screen and (min-width: 960px) {
 	
 	p, li {
-		line-height: 1.75em;
-		font-size: 14px; 
+		line-height: 1.5em;
+		font-size: 16px; 
 	}
 	
 	#wrap, #container {
@@ -1034,7 +1042,7 @@ code {
 		border-left: 1px solid #ddd;
 	}
 		
-	aside {
+	#aside {
 		float: left;
 		width: 33%;
 	}
@@ -1046,7 +1054,6 @@ code {
 	body {  
 	    font-size: 80%; 
 		line-height: 2.1em;
-		margin: 0 5%;
 	}
 	
 }
@@ -1054,7 +1061,6 @@ code {
 /* mobile width */
 @media all and (max-width: 640px) {
 
-		
 	#content {
 		width: 100%;	
 		border-right: none;
@@ -1069,7 +1075,7 @@ body {
 }
 	
 	 
-	aside {
+	#aside {
 		clear: left;
 	} 
 }
