@@ -23,7 +23,7 @@ get_header(); ?>
  */
  get_template_part( 'loop', 'tag' );
 ?>
-			</section<!-- #content -->
+			</section><!-- #content -->
 		</section><!-- #wrap -->
 
 <?php get_sidebar(); ?>

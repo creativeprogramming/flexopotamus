@@ -7,7 +7,6 @@
 	Version: 1.0
 
 */
-
 /*----------------------------------------------------------
 global resets based on Eric Meyer's "Reset Reload" at
 http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/
@@ -48,6 +47,8 @@ caption, th, td {
     text-align: left;
     font-weight: normal;
     }
+
+
 
 /* =Fonts
 -------------------------------------------------------------- */
@@ -119,7 +120,7 @@ input,
 textarea {
 	color: #666;
 	font-size: 12px;
-	line-height: 18px;
+	line-height: 1.8em;
 }
 hr {
 	background-color: #E7E7E7;
@@ -131,15 +132,15 @@ hr {
 
 /* Text elements */
 p {
-	margin-bottom: 18px;
+	margin-bottom: 2.6em;
 }
 ul {
 	list-style: square;
-	margin: 0 0 18px 1.5em;
+	margin: 0 0 2.6em 1.5em;
 }
 ol {
 	list-style: decimal;
-	margin: 0 0 18px 1.5em;
+	margin: 0 0 2.6em 1.5em;
 }
 ol ol {
 	list-style:upper-alpha;
@@ -273,16 +274,13 @@ div.menu {
 }
 #access .menu-header ul,
 div.menu ul {
-	overflow: hidden;
+
 }
 #access .menu-header li,
 div.menu li {
 	float: left;
 	list-style: none;
 	margin-right: 5px;
-}
-#access a {
-
 }
 #access ul ul {
 
@@ -357,7 +355,7 @@ div.menu li {
 #content .entry-title {
 	margin-bottom: .65em;
 	font-size: 2.6em;
-	font-weight: 600;
+	font-weight: 500;
 }
 .entry-title a:link,
 .entry-title a:visited {
@@ -685,7 +683,6 @@ h3#comments-title {
 .comment-author {
 }
 .comment-author cite {
-	color: #000;
 	font-style: normal;
 	font-weight: bold;
 }
@@ -840,7 +837,7 @@ h3#reply-title {
 	display:none;
 }
 .widget-container {
-	margin: 0 0 18px 0;
+	margin: 0 0 2.6em 0;
 }
 .widget-title {
 	color: #222;
@@ -1018,8 +1015,11 @@ code {
 
 @media screen and (min-width: 960px) {
 	
+	body {
+		line-height: 2.1em;
+	}
+	
 	p, li {
-		line-height: 1.5em;
 		font-size: 16px; 
 	}
 	
@@ -1044,8 +1044,8 @@ code {
 @media all and (max-width: 960px) {
 	
 	body {  
-	    font-size: 80%; 
-		line-height: 2.1em;
+	    font-size: 95%;
+		line-height: 1.4em;	
 	}
 	
 }
