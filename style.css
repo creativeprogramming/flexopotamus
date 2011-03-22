@@ -1121,7 +1121,7 @@ code {
 
 	ul.blogroll li a img {
 		width: 100%;
-		margin-bottom: 2em;
+		margin: 1em 0;
 	}
 
 	ul.blogroll li a:hover img {
