@@ -332,12 +332,12 @@ if ( ! function_exists( 'flexopotamus_posted_on' ) ) :
  * @since Flexopotamus 1.0
  */
 function flexopotamus_posted_on() {
-	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'flexopotamus' ),
+	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep"></span>', 'flexopotamus' ),
 		'meta-prep meta-prep-author',
 		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
 			get_permalink(),
 			esc_attr( get_the_time() ),
-			get_the_date()
+			get_the_date('m/d/Y')
 		),
 		sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
 			get_author_posts_url( get_the_author_meta( 'ID' ) ),
@@ -373,3 +373,22 @@ function flexopotamus_posted_in() {
 	);
 }
 endif;
+
+add_filter('get_search_form', 'custom_search_form');
+function custom_search_form() {
+
+	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters('flexopotamus_search_text', esc_attr__('Search', 'flexopotamus'));
+	$button_text = apply_filters( 'flexopotamus_search_button_text', esc_attr__( 'Go', 'flexopotamus' ) );
+
+	$onfocus = " onfocus=\"if (this.value == '$search_text') {this.value = '';}\"";
+	$onblur = " onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
+
+	$form = '
+		<form method="get" class="searchform" action="' . get_option('home') . '/" >
+			<input type="text" value="'. $search_text .'" name="s" class="s"'. $onfocus . $onblur .' />
+			<input type="submit" class="searchsubmit" value="'. $button_text .'" />
+		</form>
+	';
+
+	return apply_filters('custom_search_form', $form, $search_text, $button_text);
+}
