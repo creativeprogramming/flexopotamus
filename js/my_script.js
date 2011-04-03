@@ -8,7 +8,16 @@ jQuery(document).ready(function($) {
 	
 	// remove all height attributes from images for flexibility	
 	$('img').removeAttr('height');
-
+	
+	var viewport = $('meta[name="viewport"]');
+	var nua = navigator.userAgent;
+		if ((nua.match(/iPad/i)) || (nua.match(/iPhone/i)) || (nua.match(/iPod/i))) {
+			viewport.attr('content', 'width=device-width, minimum-scale=1.0, maximum-scale=1.0');
+		}
+			$('body')[0].addEventListener("gesturestart", gestureStart, false);
+		function gestureStart() {
+			viewport.attr('content', 'width=device-width, minimum-scale=0.25, maximum-scale=1.6');
+		}
 });
 
 //css3-mediaqueries.js
