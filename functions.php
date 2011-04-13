@@ -72,10 +72,10 @@ function flexopotamus_setup() {
 		        // instruction to only load if it is not the admin area
 			if ( !is_admin() ) { 
 			// register script location with wp_register_script	
-		   	wp_register_script('my_jquery',
-		       	get_bloginfo('template_directory') . '/js/my_jquery.js', array('jquery'), '1.0');	
+		   	wp_register_script('my_script',
+		       	get_bloginfo('template_directory') . '/js/my_script.js', array('jquery'), '1.0');	
 		       // enqueue the custom jquery js
-		   	wp_enqueue_script('my_jquery');	
+		   	wp_enqueue_script('my_script');	
 			}	         
 		}    
 		add_action('init', 'load_js');
