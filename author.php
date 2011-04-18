@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-		<div id="container">
+		<div id="wrap">
 			<div id="content" role="main">
 
 <?php
@@ -54,7 +54,7 @@ if ( get_the_author_meta( 'description' ) ) : ?>
 	 get_template_part( 'loop', 'author' );
 ?>
 			</div><!-- #content -->
-		</div><!-- #container -->
+		</div><!-- #wrap -->
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>
