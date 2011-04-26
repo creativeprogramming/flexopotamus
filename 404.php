@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<div id="container">
+	<div id="warp">
 		<div id="content" role="main">
 
 			<div id="post-0" class="post error404 not-found">
@@ -21,7 +21,7 @@ get_header(); ?>
 			</div><!-- #post-0 -->
 
 		</div><!-- #content -->
-	</div><!-- #container -->
+	</div><!-- #wrap -->
 	<script type="text/javascript">
 		// focus on search field after it has loaded
 		document.getElementById('s') && document.getElementById('s').focus();
