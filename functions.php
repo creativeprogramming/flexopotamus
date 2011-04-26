@@ -75,7 +75,7 @@ function flexopotamus_setup() {
 		   	wp_register_script('responsive',
 		       	get_bloginfo('template_directory') . '/js/my_script.js', array('jquery'), '1.0');	
 		       // enqueue the custom jquery js
-		   	wp_enqueue_script('responsive')
+		   	wp_enqueue_script('responsive');
 			}	         
 		}    
 		add_action('init', 'load_js');
