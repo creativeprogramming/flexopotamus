@@ -1,7 +1,7 @@
-<h1>A responsive WordPress starter parent theme based on Twenty-Ten.</h1>
+# A responsive, small screen first WordPress starter theme based on Twenty-Ten. #
 
-<h2> Create a child theme</h2>
-<p>Create a directory in the themes folder alongside the Flexopotamus parent theme and add a <code>style.css</code> file. Initialize the child theme and copy over the Flexopotamus css:
+## Create a child theme ##
+Create a directory in the themes folder alongside the Flexopotamus parent theme and add a <code>style.css</code> file. Initialize the child theme and copy over the Flexopotamus css:
 
 <pre>
 /*
@@ -17,4 +17,3 @@
 // Copy and paste the css code in flexopotamus/style.css here. Then add you child theme specific styles after. 
 // ### DON'T USE "@import" STATEMENTS! THE RESPONSIVE JAVASCRIPT WON'T WORK IF YOU DO. ###
 </pre>
-</p>
