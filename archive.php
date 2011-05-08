@@ -13,7 +13,7 @@
  */
 
 get_header(); ?>
-
+<div id="content-wrap">
 		<section id="wrap">
 			<section id="content" role="main">
 
@@ -58,4 +58,5 @@ get_header(); ?>
 		</section><!-- #wrap -->
 
 <?php get_sidebar(); ?>
+</div><!-- #content-wrap -->
 <?php get_footer(); ?>

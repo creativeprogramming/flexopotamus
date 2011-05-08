@@ -42,7 +42,6 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="wrapper" class="hfeed">
 	<header id="header">
 			<div id="branding" role="banner">
 				<h1 id="site-title">
@@ -50,7 +49,7 @@
 						<a href="<?php echo home_url( '/' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
 					</span>
 				</h1>
-				<div id="site-description"><?php bloginfo( 'description' ); ?></div>
+				<div id="site-description"><p><?php bloginfo( 'description' ); ?></p></div>
 
 			</div><!-- #branding -->
 	</header><!-- #header -->

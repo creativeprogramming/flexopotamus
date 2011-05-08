@@ -8,8 +8,8 @@
  */
 
 get_header(); ?>
-
-	<div id="warp">
+<div id="content-wrap">
+	<div id="wrap">
 		<div id="content" role="main">
 
 			<div id="post-0" class="post error404 not-found">
@@ -26,5 +26,5 @@ get_header(); ?>
 		// focus on search field after it has loaded
 		document.getElementById('s') && document.getElementById('s').focus();
 	</script>
-
+</div><!-- #content-wrap -->
 <?php get_footer(); ?>  

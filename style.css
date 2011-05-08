@@ -4,7 +4,7 @@
 	Description: A Resposive WordPress parent theme that can be extended with a child theme.
 	Author: Jason Weaver
 	Author URI: http://jasonweaver.name
-	Version: 1.2
+	Version: 2.0
 
 */
 /*----------------------------------------------------------
@@ -105,6 +105,8 @@ header, nav, section, aside, article, footer, figure {
 
 body {
 	background: #f7f7f7;
+	width: 92%;
+	margin: 0 auto;
 }
 
 body h1, body h2, body h3, body h4, body h5, body h6 {
@@ -148,8 +150,8 @@ h6 {
 }
 
 #wrapper {
-	margin: 0 auto;
-	width: 92%;
+	margin: 0 0 0 4%;
+	width: 96%;
 }
 
 body,
@@ -297,8 +299,7 @@ a:hover  {
     display: block;
     position: relative;
     z-index: 2;
-    margin: 0;
-	padding: 50px 0 0;
+	padding: 3em 0 0 0;
 }
 
 #branding {
@@ -312,9 +313,7 @@ h1#site-title {
 h1#site-title a {
 	position: relative;
 	z-index: 2;
-	background: #595a5b;	
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(20,20,20,0.6)), to(rgba(25,25,25,0.7)));	
-	background: -moz-linear-gradient(top, rgba(25,25,25,0.6), rgba(25,25,25,0.7));
+	background: #595a5b;
 	color: #f5f7f8;
 	display: block;
 	padding: 8px 1em 10px 1em;	
@@ -327,10 +326,6 @@ h1#site-title a {
 h1#site-title a:hover {
 	color: #fff;
 	background: #444;
-}
-
-h1#site-title a:active {
-	padding: 9px 1em 9px 1em;	
 }
 
 #site-description {
@@ -352,7 +347,6 @@ h1#site-title a:active {
 div.menu li {
 	float: left;
 	list-style: none;
-	margin-right: 5px;
 }
 
 #access ul {
@@ -516,7 +510,7 @@ aside {
 }
 
 form.searchform input.s {
-	padding: 7px 0 7px 25px;
+	padding: 2px 0 2px 27px;
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
@@ -882,16 +876,17 @@ h3#reply-title {
 #footer {
 	margin-bottom: 20px;
 	clear: both;
+	border-top: 1px solid #ddd;	
 }
 #colophon {
 	padding: 1.8em 0;
-	border-top: 1px solid #ddd;
 	overflow: hidden;
 }
 #site-info {
 	font-weight: bold;
 	float: left;
-	width: 50%;	
+	width: 57%;	
+	margin-left: 7%;
 }
 #site-info a {
 	color: #000;
@@ -902,7 +897,8 @@ h3#reply-title {
 	font-style: italic;
 	float: right;
 	text-align: right;
-	width: 45%;
+	width: 14%;
+	margin-right: 9%;
 }
 #site-generator a {
 	color: #666;
@@ -941,34 +937,6 @@ code {
 	-webkit-text-size-adjust: none;
 }
 
-/* large screen */
-@media screen and (min-width: 1180px) {
-
-	
-	#aside #aside-widget-area-1 {
-		float: left;
-		width: 50%
-	}
-	
-	#aside #aside-widget-area-1 .widget-area {
-		margin-right: 30px;	
-	}  
-	
-	#aside #aside-widget-area-2 {
-		float: left;
-		width: 50%;
-	}	
-	
-	#aside #aside-widget-area-2 .aside-widget-area {
-		border-left: 1px solid #ddd;
-	}
-		
-	#aside #aside-widget-area-2 .widget-area {
-		padding-left: 30px;	
-	}  
-}
-
-
 @media screen and (min-width: 960px) {
 	
 	body {
@@ -979,28 +947,42 @@ code {
 		font-size: 16px; 
 	}
 	
-	#wrapper {
-		max-width: 1180px;
+	#header, #access, #content-wrap, #footer {
+		width: 98%;
+		padding-left: 2%;
+		overflow: hidden;
 	}
 
-	#wrap, #container {
+	#wrap {
 		float: right;
-		width: 64%;	
+		width: 56%;
+		margin-right: 9%;	
 	}
 
-	#access ul.menu li {
-		width: 12%;
-		margin-right: 1px;
+	#access  .menu {
+		width: 100%;
 	}
-
+	
+	#access .menu ul {
+		padding-left: 0;
+	}
+	
+	#access .menu ul li, 
+	#access .menu-header li, #access ul.menu li.menu-item {
+		width: 14%;
+		margin: 0;
+		padding: 0;
+	}
+		
 	#access ul li a {
-		background: #ebeeef;	
-		background: rgba(1,1,1,.05);
-		font-weight: 200;
+		border-bottom: 1px solid #ddd;
+		font-weight: 200;			
+		display: block;
 		text-decoration: none;
 		color: #5c6164;
 		-webkit-transition: background .1s ease-in;
 		-moz-transition: background .1s ease-in;	
+		padding-left: 7%;
 	}
 
 	#access ul li a:hover {
@@ -1010,47 +992,67 @@ code {
 	#access ul li.current_page_item a {
 		font-style: italic;
 		background: transparent;
-		background: rgba(1,1,1,.03);		
+		background: rgba(1,1,1,.03);
+		border-bottom: 1px solid #ccc;				
 	}
 
 	#site-title {
 		float: left;
+		width: 28%;
+		margin-left: 7%;
 	}
 
-	#site-description {
+	body #site-title a {
+		text-align: center;
+		padding-right: 6%;
+		line-height: 1.3em;	
 		float: right;
 	}
-
+	
 	#site-description {
-		margin: 15px 5px 0 15px;	
+		float: right;
+		width: 56%;
+		margin: 0 9% 0 0;
+		display: none;
 	}
-
+	
+	#site-description p {
+		padding-left: 1.5%;
+		padding: .6em 1.5%;
+	}
+	
 	#access form.searchform {
 		width: 26%;
 		float: right;
-		margin: 0;
+		margin: 0 9% 0 0;
+		padding-right: 1.5%;
+		display: none;
 	}
 
 	#access form.searchform input.s{
 		float: right;
 		margin: 0;
 	}
-	
+
+	#access .menu {
+		width: 100%;
+		margin-left: 7%;
+		
+	}
+		
 	#content {
-		padding-left: 30px;
-		margin-left: 30px;
-		border-left: 1px solid #ddd;
+		margin: 0 1.5%;
 	}
 	
 	#content .hentry {
-		background: url(images/header-stars.png) repeat-x -517% bottom;
 		border: none;
 		padding-bottom: 4em;
 	}
 
 	#aside {
 		float: left;
-		width: 36%;
+		width: 28%;
+		margin-left: 7%;
 	}
 
 	#aside p {
@@ -1117,7 +1119,15 @@ code {
 		background: rgba(221,226,228,.05);
 		border-bottom: 1px solid transparent;
 	}
-
+	
+	#aside #aside-widget-area-1 .widget-area {
+		margin: 0 3%;	
+	}  
+		
+	#aside #aside-widget-area-2 .widget-area {
+		padding: 0 3%;	
+	}  
+	
 	ul.blogroll li a img {
 		width: 100%;
 		margin: 1em 0;
@@ -1133,7 +1143,7 @@ code {
 @media all and (max-width: 960px) {
 	
 	body {  
-	    font-size: 95%;
+	    font-size: 100%;
 		line-height: 1.4em;	
 		background: #f5f7f8 url(images/background.png) -100% top;
 		color: #5c6164;		
