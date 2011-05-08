@@ -72,10 +72,10 @@ function flexopotamus_setup() {
 		        // instruction to only load if it is not the admin area
 			if ( !is_admin() ) { 
 			// register script location with wp_register_script	
-		   	wp_register_script('my_script',
+		   	wp_register_script('responsive',
 		       	get_bloginfo('template_directory') . '/js/my_script.js', array('jquery'), '1.0');	
 		       // enqueue the custom jquery js
-		   	wp_enqueue_script('my_script');	
+		   	wp_enqueue_script('responsive');
 			}	         
 		}    
 		add_action('init', 'load_js');
@@ -175,7 +175,7 @@ add_filter( 'excerpt_length', 'flexopotamus_excerpt_length' );
  * @return string "Continue Reading" link
  */
 function flexopotamus_continue_reading_link() {
-	return ' <a href="'. get_permalink() . '">' . __( 'Continue <span class="meta-nav">&rarr;</span>', 'flexopotamus' ) . '</a>';
+	return ' <a href="'. get_permalink() . '">' . '<span class="read-more-link">' . __( 'Read Post', 'flexopotamus' ) . '</span></a>';
 }
 
 /**
@@ -332,7 +332,7 @@ if ( ! function_exists( 'flexopotamus_posted_on' ) ) :
  * @since Flexopotamus 1.0
  */
 function flexopotamus_posted_on() {
-	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep"></span>', 'flexopotamus' ),
+	printf( __( '<span class="%1$s">Posted on </span> %2$s <span class="meta-sep"></span>', 'flexopotamus' ),
 		'meta-prep meta-prep-author',
 		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
 			get_permalink(),
