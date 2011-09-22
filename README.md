@@ -1,5 +1,5 @@
 # A responsive, small screen first WordPress starter theme based on Twenty-Eleven.
-Flexopotamus is a parent starter theme for developers that need an good mobile friendly starting point. All styles before media queries are tuned for small screens. The theme comes packaged with [FitVidsjs](http://fitvidsjs.com/) and a custom build of  [Modernizr](http://www.modernizr.com/). Custom Modernizr detects for audio, video, flexbox, touch and also contains [Respond.js](https://github.com/scottjehl/Respond).
+Flexopotamus is a parent theme for developers that need an good mobile friendly starting point. All styles before media queries are tuned for small screens. The theme comes packaged with [FitVidsjs](http://fitvidsjs.com/) and a custom build of  [Modernizr](http://www.modernizr.com/). Custom Modernizr detects for audio, video, flexbox, touch and also contains [Respond.js](https://github.com/scottjehl/Respond).
 
 ## Flexopotamus Features ##
 Flexopotomus takes the Twenty-Eleven theme to a more progressively enhanced approach. Notable features are:
@@ -7,11 +7,11 @@ Flexopotomus takes the Twenty-Eleven theme to a more progressively enhanced appr
 * Toggle sliding search and menu at small screen sizes
 * Click events for menu items on touch devices
 * Looks good in old mobile browsers that don't understand media queries
-* Support for IE8 and later with javascript (defaults to single column layout without js)
+* Media queries support for IE8 and later with javascript (defaults to single column layout without js)
 
 
 ## Create a child theme ##
-Create a directory in the themes folder alongside the Flexopotamus parent theme and add a <code>style.css</code> file. Initialize the child theme and copy over the Flexopotamus css:
+You can edit the flexopotamus theme to fit your needs or create a child theme if that's your thing. Create a directory in the themes folder alongside the Flexopotamus parent theme and add a <code>style.css</code> file. Initialize the child theme and copy over the Flexopotamus css:
 
 <pre>
 /*
