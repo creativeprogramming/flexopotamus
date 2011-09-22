@@ -3,8 +3,7 @@
  * The template for displaying attachments.
  *
  * @package WordPress
- * @subpackage Flexopotamus
- * @since Flexopotamus 1.0
+ * @subpackage flexopotamus
  */
 
 get_header(); ?>

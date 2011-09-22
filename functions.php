@@ -1,22 +1,52 @@
 <?php
 /**
- * flexopotamus functions and definitions
+ * Flexopotamus functions and definitions
+ *
+ * Sets up the theme and provides some helper functions. Some helper functions
+ * are used in the theme as custom template tags. Others are attached to action and
+ * filter hooks in WordPress to change core functionality.
+ *
+ * The first function, flexopotamus_setup(), sets up the theme by registering support
+ * for various features in WordPress, such as post thumbnails, navigation menus, and the like.
+ *
+ * When using a child theme (see http://codex.wordpress.org/Theme_Development and
+ * http://codex.wordpress.org/Child_Themes), you can override certain functions
+ * (those wrapped in a function_exists() call) by defining them first in your child theme's
+ * functions.php file. The child theme's functions.php file is included before the parent
+ * theme's file, so the child theme functions would be used.
+ *
+ * Functions that are not pluggable (not wrapped in function_exists()) are instead attached
+ * to a filter or action hook. The hook can be removed by using remove_action() or
+ * remove_filter() and you can attach your own function to the hook.
+ *
+ * We can remove the parent theme's hook only after it is attached, which means we need to
+ * wait until setting up the child theme:
+ *
+ * <code>
+ * add_action( 'after_setup_theme', 'my_child_theme_setup' );
+ * function my_child_theme_setup() {
+ *     // We are providing our own filter for excerpt_length (or using the unfiltered value)
+ *     remove_filter( 'excerpt_length', 'flexopotamus_excerpt_length' );
+ *     ...
+ * }
+ * </code>
+ *
+ * For more information on hooks, actions, and filters, see http://codex.wordpress.org/Plugin_API.
  *
  * @package WordPress
- * @subpackage Flexopotamus
- * @since Flexopotamus 1.0
+ * @subpackage flexopotamus
+ * 
  */
 
 /**
  * Set the content width based on the theme's design and stylesheet.
- *
- * Used to set the width of images and content. Should be equal to the width the theme
- * is designed for, generally via the style.css stylesheet.
  */
 if ( ! isset( $content_width ) )
-	$content_width = 640;
+	$content_width = 584;
 
-/** Tell WordPress to run flexopotamus_setup() when the 'after_setup_theme' hook is run. */
+/**
+ * Tell WordPress to run flexopotamus_setup() when the 'after_setup_theme' hook is run.
+ */
 add_action( 'after_setup_theme', 'flexopotamus_setup' );
 
 if ( ! function_exists( 'flexopotamus_setup' ) ):
@@ -30,138 +60,92 @@ if ( ! function_exists( 'flexopotamus_setup' ) ):
  * To override flexopotamus_setup() in a child theme, add your own flexopotamus_setup to your child theme's
  * functions.php file.
  *
- * @uses add_theme_support() To add support for post thumbnails and automatic feed links.
+ * @uses add_theme_support() To add support for post thumbnails, automatic feed links, and Post Formats.
  * @uses register_nav_menus() To add support for navigation menus.
- * @uses add_custom_background() To add support for a custom background.
- * @uses add_editor_style() To style the visual editor.
- * @uses load_theme_textdomain() For translation/localization support.
  * @uses set_post_thumbnail_size() To set a custom post thumbnail size.
  *
- * @since Flexopotamus 1.0
+ * @since flexopotamus 1.0
  */
 function flexopotamus_setup() {
 
-	// This theme styles the visual editor with editor-style.css to match the theme style.
-	add_editor_style();
+	// Grab flexopotamus's Ephemera widget.
+	require( dirname( __FILE__ ) . '/inc/widgets.php' );
 
-	// This theme uses post thumbnails
-	add_theme_support( 'post-thumbnails' );
-
-	// Add default posts and comments RSS feed links to head
+	// Add default posts and comments RSS feed links to <head>.
 	add_theme_support( 'automatic-feed-links' );
 
-	// Make theme available for translation
-	// Translations can be filed in the /languages/ directory
-	load_theme_textdomain( 'flexopotamus', TEMPLATEPATH . '/languages' );
-
-	$locale = get_locale();
-	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
-	if ( is_readable( $locale_file ) )
-		require_once( $locale_file );
-
 	// This theme uses wp_nav_menu() in one location.
-	register_nav_menus( array(
-		'primary' => __( 'Primary Navigation', 'flexopotamus' ),
-	) );
+	register_nav_menu( 'primary', __( 'Primary Menu', 'flexopotamus' ) );
 
-	// This theme allows users to set a custom background
-	add_custom_background();
+	// Add support for a variety of post formats
+	add_theme_support( 'post-formats', array( 'aside', 'link', 'gallery', 'status', 'quote', 'image' ) );
+
+	// This theme uses Featured Images (also known as post thumbnails) for per-post/per-page Custom Header images
+	add_theme_support( 'post-thumbnails' );
+
+	// The next four constants set how flexopotamus supports custom headers.
+
+	// The default header text color
+	define( 'HEADER_TEXTCOLOR', '000' );
+
+	// By leaving empty, we allow for random image rotation.
+	define( 'HEADER_IMAGE', '' );
+
+	// The height and width of your custom header.
+	// Add a filter to flexopotamus_header_image_width and flexopotamus_header_image_height to change these values.
+	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flexopotamus_header_image_width', 1000 ) );
+	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flexopotamus_header_image_height', 288 ) );
+
+	// We'll be using post thumbnails for custom header images on posts and pages.
+	// We want them to be the size of the header image that we just defined
+	// Larger images will be auto-cropped to fit, smaller ones will be ignored. See header.php.
+	set_post_thumbnail_size( HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
+
+	// Add flexopotamus's custom image sizes
+	add_image_size( 'large-feature', HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true ); // Used for large feature (header) images
+	add_image_size( 'small-feature', 500, 300 ); // Used for featured posts if a large-feature doesn't exist
+
+	// Turn on random header image rotation by default.
+	add_theme_support( 'custom-header', array( 'random-default' => true ) );
 	
-		//Add jquery to theme
-		function load_js() {
-		        // instruction to only load if it is not the admin area
-			if ( !is_admin() ) { 
-			// register script location with wp_register_script	
-		   	wp_register_script('responsive',
-		       	get_bloginfo('template_directory') . '/js/my_script.js', array('jquery'), '1.0');	
-		       // enqueue the custom jquery js
-		   	wp_enqueue_script('responsive');
-			}	         
-		}    
-		add_action('init', 'load_js');
-	}	
-	endif;
 
-/**
- * Makes some changes to the <title> tag, by filtering the output of wp_title().
- *
- * If we have a site description and we're viewing the home page or a blog posts
- * page (when using a static front page), then we will add the site description.
- *
- * If we're viewing a search result, then we're going to recreate the title entirely.
- * We're going to add page numbers to all titles as well, to the middle of a search
- * result title and the end of all other titles.
- *
- * The site title also gets added to all titles.
- *
- * @since Flexopotamus 1.0
- *
- * @param string $title Title generated by wp_title()
- * @param string $separator The separator passed to wp_title(). Twenty Ten uses a
- * 	vertical bar, "|", as a separator in header.php.
- * @return string The new title, ready for the <title> tag.
- */
-function flexopotamus_filter_wp_title( $title, $separator ) {
-	// Don't affect wp_title() calls in feeds.
-	if ( is_feed() )
-		return $title;
+	function load_js() {
+	        // instruction to only load if it is not the admin area
+		if ( !is_admin() ) {
+			 
+		// deregister swfobject js							
+		wp_deregister_script('swfobject');
+				
+		// deregister l10n js			
+		wp_deregister_script( 'l10n' );	
+			
+		// register jquery CDN				
+		wp_deregister_script('jquery');
+		wp_register_script('jquery', ("https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"), false);		
+	   	wp_enqueue_script('jquery');
+	
+		// Add Modernizr to theme. Custom build detects video, audio, flexbox, touch events and adds respond.js for media queries support in older browsers.
+	   	wp_enqueue_script('modernizr',
+	       	get_bloginfo('template_directory') . '/js/modernizr.js' , array('jquery'), '2.0.6', false);
+							
+	       // enqueue your compressed js in one file and add to bottom of document
+	   	wp_enqueue_script('my_scripts',
+	       	get_bloginfo('template_directory') . '/js/my_scripts.js', array('jquery'), '1.0', true);		       
+		}	         
+	}    
+	add_action('init', 'load_js');
+	
 
-	// The $paged global variable contains the page number of a listing of posts.
-	// The $page global variable contains the page number of a single post that is paged.
-	// We'll display whichever one applies, if we're not looking at the first page.
-	global $paged, $page;
-
-	if ( is_search() ) {
-		// If we're a search, let's start over:
-		$title = sprintf( __( 'Search results for %s', 'flexopotamus' ), '"' . get_search_query() . '"' );
-		// Add a page number if we're on page 2 or more:
-		if ( $paged >= 2 )
-			$title .= " $separator " . sprintf( __( 'Page %s', 'flexopotamus' ), $paged );
-		// Add the site name to the end:
-		$title .= " $separator " . get_bloginfo( 'name', 'display' );
-		// We're done. Let's send the new title back to wp_title():
-		return $title;
-	}
-
-	// Otherwise, let's start by adding the site name to the end:
-	$title .= get_bloginfo( 'name', 'display' );
-
-	// If we have a site description and we're on the home/front page, add the description:
-	$site_description = get_bloginfo( 'description', 'display' );
-	if ( $site_description && ( is_home() || is_front_page() ) )
-		$title .= " $separator " . $site_description;
-
-	// Add a page number if necessary:
-	if ( $paged >= 2 || $page >= 2 )
-		$title .= " $separator " . sprintf( __( 'Page %s', 'flexopotamus' ), max( $paged, $page ) );
-
-	// Return the new title to wp_title():
-	return $title;
+	// ... and thus ends the changeable header business.
 }
-add_filter( 'wp_title', 'flexopotamus_filter_wp_title', 10, 2 );
+endif; // flexopotamus_setup
+
 
 /**
- * Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link.
- *
- * To override this in a child theme, remove the filter and optionally add
- * your own function tied to the wp_page_menu_args filter hook.
- *
- * @since Flexopotamus 1.0
- */
-function flexopotamus_page_menu_args( $args ) {
-	$args['show_home'] = true;
-	return $args;
-}
-add_filter( 'wp_page_menu_args', 'flexopotamus_page_menu_args' );
-
-/**
- * Sets the post excerpt length to 40 characters.
+ * Sets the post excerpt length to 40 words.
  *
  * To override this length in a child theme, remove the filter and add your own
  * function tied to the excerpt_length filter hook.
- *
- * @since Flexopotamus 1.0
- * @return int
  */
 function flexopotamus_excerpt_length( $length ) {
 	return 40;
@@ -170,12 +154,9 @@ add_filter( 'excerpt_length', 'flexopotamus_excerpt_length' );
 
 /**
  * Returns a "Continue Reading" link for excerpts
- *
- * @since Flexopotamus 1.0
- * @return string "Continue Reading" link
  */
 function flexopotamus_continue_reading_link() {
-	return ' <a href="'. get_permalink() . '">' . '<span class="read-more-link">' . __( 'Read Post', 'flexopotamus' ) . '</span></a>';
+	return ' <a href="'. esc_url( get_permalink() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'flexopotamus' ) . '</a>';
 }
 
 /**
@@ -183,9 +164,6 @@ function flexopotamus_continue_reading_link() {
  *
  * To override this in a child theme, remove the filter and add your own
  * function tied to the excerpt_more filter hook.
- *
- * @since Flexopotamus 1.0
- * @return string An ellipsis
  */
 function flexopotamus_auto_excerpt_more( $more ) {
 	return ' &hellip;' . flexopotamus_continue_reading_link();
@@ -197,9 +175,6 @@ add_filter( 'excerpt_more', 'flexopotamus_auto_excerpt_more' );
  *
  * To override this link in a child theme, remove the filter and add your own
  * function tied to the get_the_excerpt filter hook.
- *
- * @since Flexopotamus 1.0
- * @return string Excerpt with a pretty "Continue Reading" link
  */
 function flexopotamus_custom_excerpt_more( $output ) {
 	if ( has_excerpt() && ! is_attachment() ) {
@@ -210,17 +185,134 @@ function flexopotamus_custom_excerpt_more( $output ) {
 add_filter( 'get_the_excerpt', 'flexopotamus_custom_excerpt_more' );
 
 /**
- * Remove inline styles printed when the gallery shortcode is used.
- *
- * Galleries are styled by the theme in Twenty Ten's style.css.
- *
- * @since Flexopotamus 1.0
- * @return string The gallery style filter, with the styles themselves removed.
+ * Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link.
  */
-function flexopotamus_remove_gallery_css( $css ) {
-	return preg_replace( "#<style type='text/css'>(.*?)</style>#s", '', $css );
+function flexopotamus_page_menu_args( $args ) {
+	$args['show_home'] = true;
+	return $args;
 }
-add_filter( 'gallery_style', 'flexopotamus_remove_gallery_css' );
+add_filter( 'wp_page_menu_args', 'flexopotamus_page_menu_args' );
+
+/**
+ * Register our sidebars and widgetized areas. Also register the default Epherma widget.
+ *
+ * @since flexopotamus 1.0
+ */
+function flexopotamus_widgets_init() {
+
+	register_widget( 'flexopotamus_Ephemera_Widget' );
+
+	register_sidebar( array(
+		'name' => __( 'Main Sidebar', 'flexopotamus' ),
+		'id' => 'sidebar-1',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => "</aside>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	register_sidebar( array(
+		'name' => __( 'Showcase Sidebar', 'flexopotamus' ),
+		'id' => 'sidebar-2',
+		'description' => __( 'The sidebar for the optional Showcase Template', 'flexopotamus' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => "</aside>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	register_sidebar( array(
+		'name' => __( 'Footer Area One', 'flexopotamus' ),
+		'id' => 'sidebar-3',
+		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => "</aside>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	register_sidebar( array(
+		'name' => __( 'Footer Area Two', 'flexopotamus' ),
+		'id' => 'sidebar-4',
+		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => "</aside>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+
+	register_sidebar( array(
+		'name' => __( 'Footer Area Three', 'flexopotamus' ),
+		'id' => 'sidebar-5',
+		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget' => "</aside>",
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
+	) );
+}
+add_action( 'widgets_init', 'flexopotamus_widgets_init' );
+
+/**
+ * Display navigation to next/previous pages when applicable
+ */
+function flexopotamus_content_nav( $nav_id ) {
+	global $wp_query;
+
+	if ( $wp_query->max_num_pages > 1 ) : ?>
+		<nav id="<?php echo $nav_id; ?>">
+			<h3 class="assistive-text"><?php _e( 'Post navigation', 'flexopotamus' ); ?></h3>
+			<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'flexopotamus' ) ); ?></div>
+			<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'flexopotamus' ) ); ?></div>
+		</nav><!-- #nav-above -->
+	<?php endif;
+}
+
+/**
+ * Return the URL for the first link found in the post content.
+ *
+ * @since flexopotamus 1.0
+ * @return string|bool URL or false when no link is present.
+ */
+function flexopotamus_url_grabber() {
+	if ( ! preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', get_the_content(), $matches ) )
+		return false;
+
+	return esc_url_raw( $matches[1] );
+}
+
+/**
+ * Count the number of footer sidebars to enable dynamic classes for the footer
+ */
+function flexopotamus_footer_sidebar_class() {
+	$count = 0;
+
+	if ( is_active_sidebar( 'sidebar-3' ) )
+		$count++;
+
+	if ( is_active_sidebar( 'sidebar-4' ) )
+		$count++;
+
+	if ( is_active_sidebar( 'sidebar-5' ) )
+		$count++;
+
+	$class = '';
+
+	switch ( $count ) {
+		case '1':
+			$class = 'one';
+			break;
+		case '2':
+			$class = 'two';
+			break;
+		case '3':
+			$class = 'three';
+			break;
+	}
+
+	if ( $class )
+		echo 'class="' . $class . '"';
+}
 
 if ( ! function_exists( 'flexopotamus_comment' ) ) :
 /**
@@ -231,164 +323,103 @@ if ( ! function_exists( 'flexopotamus_comment' ) ) :
  *
  * Used as a callback by wp_list_comments() for displaying the comments.
  *
- * @since Flexopotamus 1.0
+ * @since flexopotamus 1.0
  */
 function flexopotamus_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 	switch ( $comment->comment_type ) :
-		case '' :
-	?>
-	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-		<div id="comment-<?php comment_ID(); ?>">
-		<div class="comment-author vcard">
-			<?php echo get_avatar( $comment, 40 ); ?>
-			<?php printf( __( '%s <span class="says">says:</span>', 'flexopotamus' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
-		</div><!-- .comment-author .vcard -->
-		<?php if ( $comment->comment_approved == '0' ) : ?>
-			<em><?php _e( 'Your comment is awaiting moderation.', 'flexopotamus' ); ?></em>
-			<br />
-		<?php endif; ?>
-
-		<div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
-			<?php
-				/* translators: 1: date, 2: time */
-				printf( __( '%1$s at %2$s', 'flexopotamus' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'flexopotamus' ), ' ' );
-			?>
-		</div><!-- .comment-meta .commentmetadata -->
-
-		<div class="comment-body"><?php comment_text(); ?></div>
-
-		<div class="reply">
-			<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-		</div><!-- .reply -->
-	</div><!-- #comment-##  -->
-
-	<?php
-			break;
-		case 'pingback'  :
+		case 'pingback' :
 		case 'trackback' :
 	?>
 	<li class="post pingback">
-		<p><?php _e( 'Pingback:', 'flexopotamus' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'flexopotamus'), ' ' ); ?></p>
+		<p><?php _e( 'Pingback:', 'flexopotamus' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __( 'Edit', 'flexopotamus' ), '<span class="edit-link">', '</span>' ); ?></p>
+	<?php
+			break;
+		default :
+	?>
+	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+		<article id="comment-<?php comment_ID(); ?>" class="comment">
+			<footer class="comment-meta">
+				<div class="comment-author vcard">
+					<?php
+						$avatar_size = 68;
+						if ( '0' != $comment->comment_parent )
+							$avatar_size = 39;
+
+						echo get_avatar( $comment, $avatar_size );
+
+						/* translators: 1: comment author, 2: date and time */
+						printf( __( '%1$s on %2$s <span class="says">said:</span>', 'flexopotamus' ),
+							sprintf( '<span class="fn">%s</span>', get_comment_author_link() ),
+							sprintf( '<a href="%1$s"><time pubdate datetime="%2$s">%3$s</time></a>',
+								esc_url( get_comment_link( $comment->comment_ID ) ),
+								get_comment_time( 'c' ),
+								/* translators: 1: date, 2: time */
+								sprintf( __( '%1$s at %2$s', 'flexopotamus' ), get_comment_date(), get_comment_time() )
+							)
+						);
+					?>
+
+					<?php edit_comment_link( __( 'Edit', 'flexopotamus' ), '<span class="edit-link">', '</span>' ); ?>
+				</div><!-- .comment-author .vcard -->
+
+				<?php if ( $comment->comment_approved == '0' ) : ?>
+					<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'flexopotamus' ); ?></em>
+					<br />
+				<?php endif; ?>
+
+			</footer>
+
+			<div class="comment-content"><?php comment_text(); ?></div>
+
+			<div class="reply">
+				<?php comment_reply_link( array_merge( $args, array( 'reply_text' => __( 'Reply <span>&darr;</span>', 'flexopotamus' ), 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
 	<?php
 			break;
 	endswitch;
 }
-endif;
-
-/**
- * Register widgetized areas, including two sidebars and four widget-ready areas in the sidebar.
- *
- * To override flexopotamus_widgets_init() in a child theme, remove the action hook and add your own
- * function tied to the init hook.
- *
- * @uses register_sidebar
- */
-function flexopotamus_widgets_init() {
-	// Area 1, located at the top of the sidebar.
-	register_sidebar( array(
-		'name' => __( 'Primary Widget Area', 'flexopotamus' ),
-		'id' => 'primary-widget-area',
-		'description' => __( 'The primary widget area', 'flexopotamus' ),
-		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
-		'after_widget' => '</li>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
-
-
-	// Area 3, located in the second sidebar.
-	register_sidebar( array(
-		'name' => __( 'Aside Widget Area', 'flexopotamus' ),
-		'id' => 'aside-widget-area',
-		'description' => __( 'The aside widget area', 'flexopotamus' ),
-		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
-		'after_widget' => '</li>',
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
-
-}
-/** Register sidebars by running flexopotamus_widgets_init() on the widgets_init hook. */
-add_action( 'widgets_init', 'flexopotamus_widgets_init' );
-
-/**
- * Removes the default styles that are packaged with the Recent Comments widget.
- *
- * To override this in a child theme, remove the filter and optionally add your own
- * function tied to the widgets_init action hook.
- *
- */
-function flexopotamus_remove_recent_comments_style() {
-	global $wp_widget_factory;
-	remove_action( 'wp_head', array( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ) );
-}
-add_action( 'widgets_init', 'flexopotamus_remove_recent_comments_style' );
+endif; // ends check for flexopotamus_comment()
 
 if ( ! function_exists( 'flexopotamus_posted_on' ) ) :
 /**
- * Prints HTML with meta information for the current post—date/time and author.
+ * Prints HTML with meta information for the current post-date/time and author.
+ * Create your own flexopotamus_posted_on to override in a child theme
  *
- * @since Flexopotamus 1.0
+ * @since flexopotamus 1.0
  */
 function flexopotamus_posted_on() {
-	printf( __( '<span class="%1$s">Posted on </span> %2$s <span class="meta-sep"></span>', 'flexopotamus' ),
-		'meta-prep meta-prep-author',
-		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
-			get_permalink(),
-			esc_attr( get_the_time() ),
-			get_the_date('m/d/Y')
-		),
-		sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
-			get_author_posts_url( get_the_author_meta( 'ID' ) ),
-			sprintf( esc_attr__( 'View all posts by %s', 'flexopotamus' ), get_the_author() ),
-			get_the_author()
-		)
+	printf( __( '<span class="sep">Posted on </span><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s" pubdate>%4$s</time></a><span class="by-author"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="%5$s" title="%6$s" rel="author">%7$s</a></span></span>', 'flexopotamus' ),
+		esc_url( get_permalink() ),
+		esc_attr( get_the_time() ),
+		esc_attr( get_the_date( 'c' ) ),
+		esc_html( get_the_date() ),
+		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+		sprintf( esc_attr__( 'View all posts by %s', 'flexopotamus' ), get_the_author() ),
+		esc_html( get_the_author() )
 	);
 }
 endif;
 
-if ( ! function_exists( 'flexopotamus_posted_in' ) ) :
 /**
- * Prints HTML with meta information for the current post (category, tags and permalink).
+ * Adds two classes to the array of body classes.
+ * The first is if the site has only had one author with published posts.
+ * The second is if a singular post being displayed
  *
+ * @since flexopotamus 1.0
  */
-function flexopotamus_posted_in() {
-	// Retrieves tag list of current post, separated by commas.
-	$tag_list = get_the_tag_list( '', ', ' );
-	if ( $tag_list ) {
-		$posted_in = __( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'flexopotamus' );
-	} elseif ( is_object_in_taxonomy( get_post_type(), 'category' ) ) {
-		$posted_in = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'flexopotamus' );
-	} else {
-		$posted_in = __( 'Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'flexopotamus' );
+function flexopotamus_body_classes( $classes ) {
+
+	if ( ! is_multi_author() ) {
+		$classes[] = 'single-author';
 	}
-	// Prints the string, replacing the placeholders.
-	printf(
-		$posted_in,
-		get_the_category_list( ', ' ),
-		$tag_list,
-		get_permalink(),
-		the_title_attribute( 'echo=0' )
-	);
+
+	if ( is_singular() && ! is_home() && ! is_page_template( 'showcase.php' ) && ! is_page_template( 'sidebar-page.php' ) )
+		$classes[] = 'singular';
+
+	return $classes;
 }
-endif;
+add_filter( 'body_class', 'flexopotamus_body_classes' );
 
-add_filter('get_search_form', 'custom_search_form');
-function custom_search_form() {
-
-	$search_text = get_search_query() ? esc_attr( apply_filters( 'the_search_query', get_search_query() ) ) : apply_filters('flexopotamus_search_text', esc_attr__('Search', 'flexopotamus'));
-	$button_text = apply_filters( 'flexopotamus_search_button_text', esc_attr__( 'Go', 'flexopotamus' ) );
-
-	$onfocus = " onfocus=\"if (this.value == '$search_text') {this.value = '';}\"";
-	$onblur = " onblur=\"if (this.value == '') {this.value = '$search_text';}\"";
-
-	$form = '
-		<form method="get" class="searchform" action="' . get_option('home') . '/" >
-			<input type="text" value="'. $search_text .'" name="s" class="s"'. $onfocus . $onblur .' />
-			<input type="submit" class="searchsubmit" value="'. $button_text .'" />
-		</form>
-	';
-
-	return apply_filters('custom_search_form', $form, $search_text, $button_text);
-}

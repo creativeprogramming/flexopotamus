@@ -2,18 +2,18 @@
 /**
  * Template Name: Blog
  * @package WordPress
+ * @subpackage flexopotamus
  */
 
 get_header(); ?>
-<div id="content-wrap">
-		<div id="wrap">
+
+		<div id="container">
 			<div id="content" role="main">
 
 			<?php get_template_part( 'loop', 'index' ); ?>
 			
 			</div><!-- #content -->
-		</div><!-- #wrap -->
+		</div><!-- #container -->
 
 <?php get_sidebar(); ?>
-</div><!-- #content-wrap -->
 <?php get_footer(); ?>

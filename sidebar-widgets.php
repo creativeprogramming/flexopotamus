@@ -3,8 +3,7 @@
  * The aside widget area.
  *
  * @package WordPress
- * @subpackage Flexopotamus
- * @since Flexopotamus 1.0
+ * @subpackage flexopotamus
  */
 ?>
 
