@@ -411,11 +411,6 @@ endif;
  * @since flexopotamus 1.0
  */
 function flexopotamus_body_classes( $classes ) {
-
-	if ( ! is_multi_author() ) {
-		$classes[] = 'single-author';
-	}
-
 	if ( is_singular() && ! is_home() && ! is_page_template( 'showcase.php' ) && ! is_page_template( 'sidebar-page.php' ) )
 		$classes[] = 'singular';
 
