@@ -1,5 +1,5 @@
 # A responsive, small screen first WordPress starter theme based on Twenty-Eleven.
-Flexopotamus is a parent theme for developers that need an good mobile friendly starting point. All styles before media queries are tuned for small screens. The theme comes packaged with [FitVidsjs](http://fitvidsjs.com/) and a custom build of  [Modernizr](http://www.modernizr.com/). Custom Modernizr detects for audio, video, flexbox, touch and also contains [Respond.js](https://github.com/scottjehl/Respond).
+Flexopotamus is a parent theme for developers that need a good mobile friendly starting point. All styles before media queries are tuned for small screens allowing for progressive enhancement. The theme comes packaged with [FitVidsjs](http://fitvidsjs.com/), the [jQuery fix for the iOS orientation scale bug](http://jasonweaver.name/2011/04/ios-viewport-scale-problem/) and a custom build of  [Modernizr](http://www.modernizr.com/). Custom Modernizr detects for audio, video, flexbox, touch and also contains [Respond.js](https://github.com/scottjehl/Respond). I'd love to improve this starter theme so please fork and send pull requests.
 
 ## Flexopotamus Features ##
 Flexopotomus takes the Twenty-Eleven theme to a more progressively enhanced approach. Notable features are:
