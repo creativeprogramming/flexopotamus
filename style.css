@@ -469,6 +469,11 @@ input#searchsubmit {
 	cursor: pointer;
 }
 
+
+.admin-bar .menu-button {
+	top: 18px;
+}
+
 #access {
 	background: #eee;	
 	clear: both;
