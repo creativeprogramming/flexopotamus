@@ -2,8 +2,6 @@
 /**
  * The Header for our theme.
  *
- * Displays all of the <head> section and everything up till <div id="main">
- *
  * @package WordPress
  * @subpackage flexopotamus
  * @since flexopotamus 1.0
@@ -26,7 +24,6 @@
 <!--<![endif]-->
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
-<!-- Mobile viewport optimized: j.mp/bplateviewport -->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title><?php
 	/*

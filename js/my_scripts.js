@@ -80,14 +80,52 @@ $('.menu-item').click(function() {
 })( jQuery );
 
 
-    //  Patch for Mobile Safari's orientation change bug
-    //  Based on http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
-	var viewport = $('meta[name="viewport"]');
-	var nua = navigator.userAgent;
-		if ((nua.match(/iPad/i)) || (nua.match(/iPhone/i)) || (nua.match(/iPod/i))) {
-			viewport.attr('content', 'width=device-width, minimum-scale=1.0, maximum-scale=1.0');
-		$('body')[0].addEventListener("gesturestart", gestureStart, false);
-		}	
-		function gestureStart() {
-			viewport.attr('content', 'width=device-width, minimum-scale=0.25, maximum-scale=1.6');
-		}
+/*! A fix for the iOS orientationchange zoom bug.
+ Script by @scottjehl, rebound by @wilto.
+ MIT License.
+*/
+(function(w){
+    var doc = w.document;
+
+    if( !doc.querySelector ){ return; }
+
+    var meta = doc.querySelector( "meta[name=viewport]" ),
+        initialContent = meta && meta.getAttribute( "content" ),
+        disabledZoom = initialContent + ", maximum-scale=1.0",
+        enabledZoom = initialContent + ", maximum-scale=10.0",
+        enabled = true,
+        orientation = w.orientation,
+        rotation = 0;
+
+    if( !meta ){ return; }
+
+    function restoreZoom(){
+        meta.setAttribute( "content", enabledZoom );
+        enabled = true;
+    }
+
+    function disableZoom(){
+        meta.setAttribute( "content", disabledZoom );
+        enabled = false;
+    }
+
+    function checkTilt( e ){
+        orientation = Math.abs( w.orientation );
+        rotation = Math.abs( e.gamma );
+
+        if( rotation > 8 && orientation === 0 ){
+            if( enabled ){
+                disableZoom();
+            }   
+        }
+        else {
+            if( !enabled ){
+                restoreZoom();
+            }
+        }
+    }
+
+    w.addEventListener( "orientationchange", restoreZoom, false );
+    w.addEventListener( "deviceorientation", checkTilt, false );
+
+})( this );

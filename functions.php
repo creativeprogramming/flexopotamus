@@ -1,48 +1,10 @@
 <?php
 /**
- * Flexopotamus functions and definitions
- *
- * Sets up the theme and provides some helper functions. Some helper functions
- * are used in the theme as custom template tags. Others are attached to action and
- * filter hooks in WordPress to change core functionality.
- *
- * The first function, flexopotamus_setup(), sets up the theme by registering support
- * for various features in WordPress, such as post thumbnails, navigation menus, and the like.
- *
- * When using a child theme (see http://codex.wordpress.org/Theme_Development and
- * http://codex.wordpress.org/Child_Themes), you can override certain functions
- * (those wrapped in a function_exists() call) by defining them first in your child theme's
- * functions.php file. The child theme's functions.php file is included before the parent
- * theme's file, so the child theme functions would be used.
- *
- * Functions that are not pluggable (not wrapped in function_exists()) are instead attached
- * to a filter or action hook. The hook can be removed by using remove_action() or
- * remove_filter() and you can attach your own function to the hook.
- *
- * We can remove the parent theme's hook only after it is attached, which means we need to
- * wait until setting up the child theme:
- *
- * <code>
- * add_action( 'after_setup_theme', 'my_child_theme_setup' );
- * function my_child_theme_setup() {
- *     // We are providing our own filter for excerpt_length (or using the unfiltered value)
- *     remove_filter( 'excerpt_length', 'flexopotamus_excerpt_length' );
- *     ...
- * }
- * </code>
- *
- * For more information on hooks, actions, and filters, see http://codex.wordpress.org/Plugin_API.
  *
  * @package WordPress
  * @subpackage flexopotamus
  * 
  */
-
-/**
- * Set the content width based on the theme's design and stylesheet.
- */
-if ( ! isset( $content_width ) )
-	$content_width = 584;
 
 /**
  * Tell WordPress to run flexopotamus_setup() when the 'after_setup_theme' hook is run.
@@ -69,7 +31,7 @@ if ( ! function_exists( 'flexopotamus_setup' ) ):
 function flexopotamus_setup() {
 
 	// Grab flexopotamus's Ephemera widget.
-	require( dirname( __FILE__ ) . '/inc/widgets.php' );
+	require( dirname( __FILE__ ) . '/inc/widgets.php' );	
 
 	// Add default posts and comments RSS feed links to <head>.
 	add_theme_support( 'automatic-feed-links' );
@@ -211,45 +173,6 @@ function flexopotamus_widgets_init() {
 		'after_title' => '</h3>',
 	) );
 
-	register_sidebar( array(
-		'name' => __( 'Showcase Sidebar', 'flexopotamus' ),
-		'id' => 'sidebar-2',
-		'description' => __( 'The sidebar for the optional Showcase Template', 'flexopotamus' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => "</aside>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
-
-	register_sidebar( array(
-		'name' => __( 'Footer Area One', 'flexopotamus' ),
-		'id' => 'sidebar-3',
-		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => "</aside>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
-
-	register_sidebar( array(
-		'name' => __( 'Footer Area Two', 'flexopotamus' ),
-		'id' => 'sidebar-4',
-		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => "</aside>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
-
-	register_sidebar( array(
-		'name' => __( 'Footer Area Three', 'flexopotamus' ),
-		'id' => 'sidebar-5',
-		'description' => __( 'An optional widget area for your site footer', 'flexopotamus' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => "</aside>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
-	) );
 }
 add_action( 'widgets_init', 'flexopotamus_widgets_init' );
 
