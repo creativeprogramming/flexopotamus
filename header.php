@@ -10,15 +10,18 @@
  */
 ?><!DOCTYPE html>
 <!--[if IE 6]>
-<html id="ie6" <?php language_attributes(); ?>>
+<html class="ie6 ie" <?php language_attributes(); ?>>
 <![endif]-->
 <!--[if IE 7]>
-<html id="ie7" <?php language_attributes(); ?>>
+<html class="ie7 ie" <?php language_attributes(); ?>>
 <![endif]-->
 <!--[if IE 8]>
-<html id="ie8" <?php language_attributes(); ?>>
+<html class="ie8 ie" <?php language_attributes(); ?>>
 <![endif]-->
-<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<!--[if IE 9]>
+<html class="ie9 ie" <?php language_attributes(); ?>>
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8) | !(IE 9)  ]><!-->
 <html <?php language_attributes(); ?>>
 <!--<![endif]-->
 <head>
