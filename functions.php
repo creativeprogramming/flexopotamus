@@ -15,10 +15,6 @@ if ( ! function_exists( 'flexopotamus_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
- * Note that this function is hooked into the after_setup_theme hook, which runs
- * before the init hook. The init hook is too late for some features, such as indicating
- * support post thumbnails.
- *
  * To override flexopotamus_setup() in a child theme, add your own flexopotamus_setup to your child theme's
  * functions.php file.
  *
@@ -45,31 +41,7 @@ function flexopotamus_setup() {
 	// This theme uses Featured Images (also known as post thumbnails) for per-post/per-page Custom Header images
 	add_theme_support( 'post-thumbnails' );
 
-	// The next four constants set how flexopotamus supports custom headers.
-
-	// The default header text color
-	define( 'HEADER_TEXTCOLOR', '000' );
-
-	// By leaving empty, we allow for random image rotation.
-	define( 'HEADER_IMAGE', '' );
-
-	// The height and width of your custom header.
-	// Add a filter to flexopotamus_header_image_width and flexopotamus_header_image_height to change these values.
-	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'flexopotamus_header_image_width', 1000 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'flexopotamus_header_image_height', 288 ) );
-
-	// We'll be using post thumbnails for custom header images on posts and pages.
-	// We want them to be the size of the header image that we just defined
-	// Larger images will be auto-cropped to fit, smaller ones will be ignored. See header.php.
-	set_post_thumbnail_size( HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
-
-	// Add flexopotamus's custom image sizes
-	add_image_size( 'large-feature', HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true ); // Used for large feature (header) images
 	add_image_size( 'small-feature', 500, 300 ); // Used for featured posts if a large-feature doesn't exist
-
-	// Turn on random header image rotation by default.
-	add_theme_support( 'custom-header', array( 'random-default' => true ) );
-	
 
 	function load_js() {
 	        // instruction to only load if it is not the admin area

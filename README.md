@@ -7,7 +7,7 @@ Flexopotomus takes the Twenty-Eleven theme to a more progressively enhanced appr
 * Toggle sliding search and menu at small screen sizes
 * Click events for menu items on touch devices
 * Looks good in old mobile browsers that don't understand media queries
-* Media queries support for IE8 and later with javascript (defaults to single column layout without js)
+* Media queries support for IE6+ with javascript (defaults to single column layout without js)
 
 
 ## Create a child theme ##
